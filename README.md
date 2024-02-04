@@ -1,6 +1,6 @@
 # vite-plugin-ssam-replicate
 
-This is a plugin for [Ssam.js](https://github.com/cdaein/ssam) creative coding helper. It uses [Replicate](https://replicate.com/) Node.js API to generate Stable Diffusion image from your HTML5 Canvas drawing. With this plugin, you don't have to write boilerplate code for the backend and focus on your Canvas drawing code.
+This is a plugin for [Ssam.js](https://github.com/cdaein/ssam) creative coding helper. It uses [Replicate](https://replicate.com/) Node.js API to generate Stable Diffusion image from your HTML5 Canvas drawing. With this plugin, you don't have to write boilerplate for the backend and focus on your Canvas drawing code.
 
 ## Notes
 
@@ -9,8 +9,11 @@ This is a plugin for [Ssam.js](https://github.com/cdaein/ssam) creative coding h
 
 ## Installation
 
+When you set up your Ssam sketch with `npm create ssam@latest`, Choose the StableDiffusion template.
+
+If you want to install and set it up yourself:
+
 ```sh
-npm create ssam@latest
 npm i -D vite-plugin-ssam-replicate
 ```
 
