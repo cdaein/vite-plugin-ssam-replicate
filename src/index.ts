@@ -7,7 +7,14 @@
 
 import type { PluginOption, WebSocketClient } from "vite";
 import Replicate from "replicate";
-import { createDir, prefix, removeAnsi, saveRemoteFile } from "./utils";
+import {
+  ssamLog,
+  createDir,
+  prefix,
+  removeAnsi,
+  saveRemoteFile,
+  ssamWarn,
+} from "./utils";
 
 type Options = {
   /**
@@ -63,9 +70,7 @@ export const ssamReplicate = (opts: Options): PluginOption => ({
 
         const { version, input, dryRun = true } = data;
 
-        client.send("ssam:log", {
-          msg: removeAnsi(`${prefix()} Running model..`),
-        });
+        ssamLog(`${prefix()} Requesting..`, client, log);
 
         if (!dryRun) {
           try {
@@ -76,9 +81,8 @@ export const ssamReplicate = (opts: Options): PluginOption => ({
             });
             prediction = await replicate.wait(prediction);
 
-            client.send("ssam:log", {
-              msg: removeAnsi(`${prefix()} Output generated.`),
-            });
+            ssamLog(`${prefix()} Output generated.`, client, log);
+
             client.send("ssam:replicate-prediction", prediction);
 
             if (saveOutput) {
@@ -93,17 +97,14 @@ export const ssamReplicate = (opts: Options): PluginOption => ({
               }
             }
           } catch (e) {
-            console.error(e);
-            client.send("ssam:warn", {
-              msg: removeAnsi(`${prefix()} ${e}`),
-            });
+            ssamWarn(`${prefix()} ${e}`, client, log);
           }
         } else {
-          client.send("ssam:log", {
-            msg: removeAnsi(
-              `${prefix()} This is a dry run. No request is sent to Replicate API.`,
-            ),
-          });
+          ssamLog(
+            `${prefix()} Dry run. No request is sent to Replicate API.`,
+            client,
+            log,
+          );
           client.send("ssam:replicate-prediction", { output: testOutput });
         }
       },
@@ -116,17 +117,12 @@ export const ssamReplicate = (opts: Options): PluginOption => ({
 
         const { model, input, dryRun = true } = data;
 
-        client.send("ssam:log", {
-          msg: removeAnsi(`${prefix()} Running model..`),
-        });
         if (!dryRun) {
           try {
+            ssamLog(`${prefix()} Requesting..`, client, log);
             // .run() only returns output.
             const output = (await replicate.run(model, { input })) as string[];
-
-            client.send("ssam:log", {
-              msg: removeAnsi(`${prefix()} Output generated.`),
-            });
+            ssamLog(`${prefix()} Output generated.`, client, log);
             client.send("ssam:replicate-output", output);
 
             if (saveOutput) {
@@ -140,17 +136,14 @@ export const ssamReplicate = (opts: Options): PluginOption => ({
               }
             }
           } catch (e) {
-            console.error(e);
-            client.send("ssam:warn", {
-              msg: removeAnsi(`${prefix()} ${e}`),
-            });
+            ssamWarn(`${prefix()} ${e}`, client, log);
           }
         } else {
-          client.send("ssam:log", {
-            msg: removeAnsi(
-              `${prefix()} Dry run. No request sent to Replicate API.`,
-            ),
-          });
+          ssamLog(
+            `${prefix()} Dry run. No request sent to Replicate API.`,
+            client,
+            log,
+          );
           client.send("ssam:replicate-output", { output: testOutput });
         }
       },

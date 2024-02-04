@@ -7,6 +7,24 @@ import { WebSocketClient } from "vite";
 
 const { gray, green, yellow } = pc;
 
+export const ssamLog = (
+  msg: string,
+  client: WebSocketClient,
+  clientLog?: boolean,
+) => {
+  console.log(msg);
+  clientLog && client.send("ssam:log", { msg: removeAnsi(msg) });
+};
+
+export const ssamWarn = (
+  msg: string,
+  client: WebSocketClient,
+  clientLog?: boolean,
+) => {
+  console.error(msg);
+  clientLog && client.send("ssam:warn", { msg: removeAnsi(msg) });
+};
+
 export const prefix = () => {
   return `${gray(new Date().toLocaleTimeString())} ${green(`[ssam-replicate]`)}`;
 };
