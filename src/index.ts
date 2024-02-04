@@ -7,14 +7,7 @@
 
 import type { PluginOption, WebSocketClient } from "vite";
 import Replicate from "replicate";
-import {
-  ssamLog,
-  createDir,
-  prefix,
-  removeAnsi,
-  saveRemoteFile,
-  ssamWarn,
-} from "./utils";
+import { ssamLog, createDir, prefix, saveRemoteFile, ssamWarn } from "./utils";
 
 type Options = {
   /**
@@ -117,9 +110,10 @@ export const ssamReplicate = (opts: Options): PluginOption => ({
 
         const { model, input, dryRun = true } = data;
 
+        ssamLog(`${prefix()} Requesting..`, client, log);
+
         if (!dryRun) {
           try {
-            ssamLog(`${prefix()} Requesting..`, client, log);
             // .run() only returns output.
             const output = (await replicate.run(model, { input })) as string[];
             ssamLog(`${prefix()} Output generated.`, client, log);
