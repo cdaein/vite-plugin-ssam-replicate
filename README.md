@@ -42,10 +42,10 @@ export default defineConfig({
       */
       apiKey: string;
       /**
-      * Test image filename for dry run.
+      * Test image filename(s) for dry run.
       * Place it somewhere in the sketch directory. ie. `output/`
       */
-      testImg?: string;
+      testOutput?: string[];
       /**
       * Save generated output files in `outDir`
       * @default true
