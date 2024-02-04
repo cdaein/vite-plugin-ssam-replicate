@@ -1,0 +1,48 @@
+{
+  "name": "vite-plugin-ssam-replicate",
+  "version": "0.1.0",
+  "description": "Generate Stable Diffusion images with Ssam.js via Replicate API",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "type": "module",
+  "files": [
+    "/dist"
+  ],
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "build": "tsc --noemit && tsup",
+    "watch": "tsc --watch"
+  },
+  "keywords": [
+    "canvas",
+    "replicate",
+    "ssam",
+    "stable-diffusion"
+  ],
+  "author": "Daeinc",
+  "license": "MIT",
+  "devDependencies": {
+    "@daeinc/draw": "^0.4.0",
+    "@thi.ng/color": "^5.6.16",
+    "@types/node": "^20.11.16",
+    "ssam": "^0.14.1",
+    "tsup": "^8.0.1",
+    "typescript": "^5.3.3",
+    "vite": "^5.0.12"
+  },
+  "dependencies": {
+    "ansi-regex": "^6.0.1",
+    "picocolors": "^1.0.0",
+    "replicate": "^0.25.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cdaein/vite-plugin-ssam-replicate.git"
+  },
+  "bugs": {
+    "url": "https://github.com/cdaein/vite-plugin-ssam-replicate/issues"
+  },
+  "homepage": "https://github.com/cdaein/vite-plugin-ssam-replicate#readme"
+}
