@@ -25,8 +25,9 @@ npm i -D vite-plugin-ssam-replicate
 import { defineConfig, loadEnv } from "vite";
 import { ssamReplicate } from "vite-plugin-ssam-replicate";
 
-// Store Replicate API Key in `.env.DEV.local` file
-// and make sure not to share with anyone!
+// Store Replicate API Key in `.env.DEV.local` file. ex. `REPLICATE_API_KEY=abcd1234`
+// Then, pass it to the plugin like `apiKey: envVars.REPLICATE_API_KEY`.
+// Make sure not to share the key with anyone!
 const envVars = loadEnv("DEV", process.cwd(), "REPLICATE_");
 
 export default defineConfig({
