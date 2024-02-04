@@ -2,6 +2,9 @@
 // run => output
 // predict => prediction
 
+// TODO:
+// - declare custom event types here (or on the client-side)?
+
 import type { PluginOption, WebSocketClient } from "vite";
 import Replicate from "replicate";
 import { createDir, prefix, removeAnsi, saveRemoteFile } from "./utils";
@@ -12,10 +15,10 @@ type Options = {
    */
   apiKey: string;
   /**
-   * Test image filename for dry run.
+   * Test image filename(s) for dry run.
    * Place it somewhere in the sketch directory. ie. `output/`
    */
-  testImg?: string;
+  testOutput?: string[];
   /**
    * Save generated output files in `outDir`
    * @default true
@@ -34,7 +37,7 @@ type Options = {
 };
 
 const defaultOptions = {
-  testImg: "",
+  testOutput: [""],
   saveOutput: true,
   log: true,
   outDir: "./output",
@@ -44,7 +47,7 @@ export const ssamReplicate = (opts: Options): PluginOption => ({
   name: "ssam-replicate",
   apply: "serve",
   configureServer(server) {
-    const { log, testImg, saveOutput, outDir, apiKey } = {
+    const { log, testOutput, saveOutput, outDir, apiKey } = {
       ...defaultOptions,
       ...opts,
     };
@@ -96,13 +99,12 @@ export const ssamReplicate = (opts: Options): PluginOption => ({
             });
           }
         } else {
-          const output = [testImg];
           client.send("ssam:log", {
             msg: removeAnsi(
               `${prefix()} This is a dry run. No request is sent to Replicate API.`,
             ),
           });
-          client.send("ssam:replicate-prediction", { output });
+          client.send("ssam:replicate-prediction", testOutput);
         }
       },
     );
@@ -144,13 +146,12 @@ export const ssamReplicate = (opts: Options): PluginOption => ({
             });
           }
         } else {
-          const output = [testImg];
           client.send("ssam:log", {
             msg: removeAnsi(
-              `${prefix()} This is a dry run. No request is sent to Replicate API.`,
+              `${prefix()} Dry run. No request sent to Replicate API.`,
             ),
           });
-          client.send("ssam:replicate-output", output);
+          client.send("ssam:replicate-output", testOutput);
         }
       },
     );
