@@ -104,7 +104,7 @@ export const ssamReplicate = (opts: Options): PluginOption => ({
               `${prefix()} This is a dry run. No request is sent to Replicate API.`,
             ),
           });
-          client.send("ssam:replicate-prediction", testOutput);
+          client.send("ssam:replicate-prediction", { output: testOutput });
         }
       },
     );
@@ -151,7 +151,7 @@ export const ssamReplicate = (opts: Options): PluginOption => ({
               `${prefix()} Dry run. No request sent to Replicate API.`,
             ),
           });
-          client.send("ssam:replicate-output", testOutput);
+          client.send("ssam:replicate-output", { output: testOutput });
         }
       },
     );
