@@ -9,9 +9,9 @@ This is a plugin for [Ssam.js](https://github.com/cdaein/ssam) creative coding h
 
 ## Installation
 
-When you set up your Ssam sketch with `npm create ssam@latest`, Choose the StableDiffusion template.
+Create a new sketch with `npm create ssam@latest` and choose the StableDiffusion template. You only need to provide your API key.
 
-If you want to install and set it up yourself:
+If you are not using Ssam, install with the following command:
 
 ```sh
 npm i -D vite-plugin-ssam-replicate
@@ -19,7 +19,7 @@ npm i -D vite-plugin-ssam-replicate
 
 ## Setup
 
-1. Create an API key on Replicate.com.
+1. Create an API key on [Replicate.com](https://replicate.com).
 1. Create a `.env.DEV.local` file on the root of the Ssam sketch folder.
 1. Add the key as `REPLICATE_API_KEY=abcd1234` as environment variable. **Do not share this key with anyone! You will be charged for images generated with the key.**
 1. In `vite.config.ts`, import and add the plugin.
