@@ -74,7 +74,7 @@ export const ssamReplicate = (opts: Options): PluginOption => ({
             });
             prediction = await replicate.wait(prediction);
 
-            ssamLog(`${prefix()} Output generated.`, client, log);
+            ssamLog(`${prefix()} Prediction generated.`, client, log);
 
             client.send("ssam:replicate-prediction", prediction);
 
@@ -138,7 +138,7 @@ export const ssamReplicate = (opts: Options): PluginOption => ({
             client,
             log,
           );
-          client.send("ssam:replicate-output", { output: testOutput });
+          client.send("ssam:replicate-output", testOutput);
         }
       },
     );
