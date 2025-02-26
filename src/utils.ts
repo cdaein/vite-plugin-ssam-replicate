@@ -1,11 +1,23 @@
 import path from "node:path";
 import fs from "node:fs";
 import https from "node:https";
-import pc from "picocolors";
 import ansiRegex from "ansi-regex";
 import { WebSocketClient } from "vite";
 
-const { gray, green, yellow } = pc;
+const colors = {
+  reset: "\x1b[0m",
+  green: "\x1b[32m",
+  yellow: "\x1b[33m",
+  gray: "\x1b[90m",
+};
+
+/**
+ * @param str - string to print in color
+ * @param c - pre-defined color string from `colors` object
+ * @returns Original string surrounded by color code and reset code.
+ */
+export const color = (str: string, c: keyof typeof colors) =>
+  `${colors[c]}${str}${colors.reset}`;
 
 export const ssamLog = (
   msg: string,
@@ -26,7 +38,7 @@ export const ssamWarn = (
 };
 
 export const prefix = () => {
-  return `${gray(new Date().toLocaleTimeString())} ${green(`[ssam-replicate]`)}`;
+  return `${color(new Date().toLocaleTimeString(), "gray")} ${color(`[ssam-replicate]`, "green")}`;
 };
 
 export const removeAnsi = (str: string) => {
@@ -45,7 +57,7 @@ export const createDir = (outDir: string) => {
         console.log(msg);
       })
       .catch((err) => {
-        console.error(`${prefix()} ${yellow(`${err}`)}`);
+        console.error(`${prefix()} ${color(`${err}`, "yellow")}`);
       });
   }
 };
@@ -87,7 +99,7 @@ export const saveRemoteFile = async ({
             return resolve();
           })
           .on("error", (e) => {
-            const msg = `${prefix()} ${yellow(e.message)}`;
+            const msg = `${prefix()} ${color(e.message, "yellow")}`;
             log &&
               client.send("ssam:warn", {
                 msg: removeAnsi(msg),
@@ -98,7 +110,7 @@ export const saveRemoteFile = async ({
       });
     });
   } catch (e) {
-    console.error(`${prefix()} ${yellow(`${e}`)}`);
+    console.error(`${prefix()} ${color(`${e}`, "yellow")}`);
   }
 };
 
